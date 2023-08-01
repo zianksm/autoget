@@ -1,3 +1,5 @@
+#![doc = include_str!("../../README.md")]
+
 use quote::quote_spanned;
 use syn::{ parse_macro_input, Ident, Field };
 use syn::spanned::Spanned;
