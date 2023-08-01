@@ -34,7 +34,7 @@ fn impl_autoget(
     struct_: &syn::DataStruct,
     struct_name: Ident
 ) -> Result<proc_macro2::TokenStream, proc_macro::TokenStream> {
-    let mut fields = get_fields_ident_by_attribute(NO_MUT, &struct_)?;
+    let mut fields = get_fields_ident_by_attribute(&struct_)?;
 
     code_gen(&mut fields);
 
@@ -72,9 +72,6 @@ fn is_struct(
     Ok(struct_)
 }
 
-fn is_helper_attribute_exist(attribute_ident: &'static str, field: &Field) -> bool {
-    field.attrs.iter().any(|attr| attr.path().is_ident(attribute_ident))
-}
 struct FieldInfo {
     inner: Field,
     no_mut: bool,
@@ -133,7 +130,6 @@ fn info(field: Field) -> Result<FieldInfo, proc_macro::TokenStream> {
 }
 
 fn get_fields_ident_by_attribute(
-    attribute_ident: &'static str,
     struct_: &syn::DataStruct
 ) -> Result<Vec<FieldInfo>, proc_macro::TokenStream> {
     let fields = struct_.fields
