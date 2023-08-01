@@ -27,8 +27,6 @@ pub fn derive(item: proc_macro::TokenStream) -> proc_macro::TokenStream {
         }
     };
 
-    println!("{}", impls);
-
     impls.into()
 }
 
