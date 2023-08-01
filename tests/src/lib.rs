@@ -8,3 +8,6 @@ struct Something {
     #[no_mut]
     test3: String,
 }
+
+#[derive(autoget::AutoGet)]
+pub struct NewType(String);
