@@ -101,15 +101,6 @@ impl FieldInfo {
 fn info(field: Field) -> Result<FieldInfo, proc_macro::TokenStream> {
     let mut err = Vec::new();
 
-    if field.ident.is_none() {
-        let _err =
-            quote_spanned! {
-                    field.span() => compile_error!("Can't use AutoGet on tuple structs!")
-                };
-
-        err.push(_err);
-    }
-
     let field = FieldInfo::new(field);
 
     if field.is_double_attribute() {
@@ -144,7 +135,14 @@ fn get_fields_ident_by_attribute(
 }
 
 fn gen(field: &mut FieldInfo) {
-    let ident = field.inner.ident.clone().unwrap();
+    // for handling newtype structs
+    let default_ident = Ident::new("inner", field.inner.span());
+
+    let ident = field.inner.ident.clone().unwrap_or(default_ident.clone());
+    let code_ref = match ident.eq(&default_ident) {
+        true => quote::quote! { self.0 },
+        false => quote::quote! { self.#ident },
+    };
     let ty = field.inner.ty.clone();
 
     let mut code = Vec::new();
@@ -156,7 +154,7 @@ fn gen(field: &mut FieldInfo) {
     let no_mut =
         quote::quote! {
         fn #ident(&self) -> &#ty {
-            &self.#ident
+            &#code_ref 
         }
     };
 
@@ -168,14 +166,15 @@ fn gen(field: &mut FieldInfo) {
         let _mut =
             quote::quote! {
             fn #fn_ident(&mut self) -> &mut #ty {
-                &mut self.#ident
+                &mut #code_ref 
             }
         };
 
         code.push(_mut);
     }
 
-    field.code_gen = Some(quote::quote!(#(#code)*));
+    let code = quote::quote!(#(#code)*);
+    field.code_gen = Some(code);
 }
 
 fn code_gen(fields: &mut Vec<FieldInfo>) {
