@@ -6,6 +6,7 @@ authors = ["zianksm"]
 description = "A simple macro to generate getters for structs"
 keywords = ["macro", "getter", "struct"]
 readme = "../README.md"
+license = "Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
