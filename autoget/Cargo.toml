@@ -1,6 +1,6 @@
 [package]
 name = "autoget"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["zianksm"]
 description = "A simple macro to generate getters for structs"
