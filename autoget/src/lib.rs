@@ -243,7 +243,7 @@ fn gen(field: &mut FieldInfo) {
         let fn_ident = Ident::new(name.as_str(), ident.span());
         let _mut =
             quote::quote! {
-            fn #fn_ident(&mut self) -> &mut #ty {
+            pub fn #fn_ident(&mut self) -> &mut #ty {
                 &mut #code_ref 
             }
         };
