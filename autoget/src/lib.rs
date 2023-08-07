@@ -231,7 +231,7 @@ fn gen(field: &mut FieldInfo) {
 
     let no_mut =
         quote::quote! {
-        fn #ident(&self) -> &#ty {
+        pub fn #ident(&self) -> &#ty {
             &#code_ref 
         }
     };
