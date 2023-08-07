@@ -17,22 +17,22 @@ this will generate code that looks something like this:
 
 ```rust
 impl Something {
-    fn test(&self) -> &String {
+    pub fn test(&self) -> &String {
         &self.test
     }
-    fn test_mut(&mut self) -> &mut String {
+    pub fn test_mut(&mut self) -> &mut String {
         &mut self.test
     }
-    fn test2(&self) -> &String {
+    pub fn test2(&self) -> &String {
         &self.test2
     }
-    fn test2_mut(&mut self) -> &mut String {
+    pub fn test2_mut(&mut self) -> &mut String {
         &mut self.test2
     }
-    fn test3(&self) -> &String {
+    pub fn test3(&self) -> &String {
         &self.test3
     }
-    fn test3_mut(&mut self) -> &mut String {
+    pub fn test3_mut(&mut self) -> &mut String {
         &mut self.test3
     }
 }
